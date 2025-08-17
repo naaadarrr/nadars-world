@@ -1,0 +1,42 @@
+{
+  "name": "macosx-components",
+  "version": "1.0.0",
+  "description": "macOS X style window and chat components for React",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "react",
+    "macos",
+    "window",
+    "components",
+    "ui",
+    "aqua",
+    "osx"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "framer-motion": "^10.0.0 || ^11.0.0 || ^12.0.0",
+    "zustand": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "components/",
+    "hooks/",
+    "theme/",
+    "types/",
+    "styles/",
+    "index.ts",
+    "README.md"
+  ]
+}

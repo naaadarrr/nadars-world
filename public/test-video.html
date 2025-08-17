@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Test</title>
+</head>
+<body>
+    <h1>Video Test</h1>
+    <video controls width="800" style="max-width: 100%;">
+        <source src="/videos/anyshoot/anyfit-promo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <script>
+        const video = document.querySelector('video');
+        video.addEventListener('error', (e) => {
+            console.error('Video error:', e);
+            console.error('Error details:', video.error);
+        });
+        video.addEventListener('loadstart', () => console.log('Load started'));
+        video.addEventListener('loadedmetadata', () => console.log('Metadata loaded'));
+        video.addEventListener('canplay', () => console.log('Can play'));
+    </script>
+</body>
+</html>

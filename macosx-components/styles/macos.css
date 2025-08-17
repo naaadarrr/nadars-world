@@ -1,0 +1,300 @@
+/* macOS Window Component Styles */
+
+/* Base styles using CSS custom properties */
+.macos-window {
+  font-family: var(--macos-font-ui);
+  -webkit-font-smoothing: antialiased;
+  font-smooth: auto;
+}
+
+/* Pinstripe patterns for authentic macOS look */
+.macos-pinstripe-titlebar {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(219, 219, 219, 0.6) 70%,
+    rgba(206, 206, 206, 0.7) 100%
+  );
+}
+
+.macos-pinstripe-window {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 1.5px,
+      rgba(255, 255, 255, 0.85) 1.5px,
+      rgba(255, 255, 255, 0.85) 4px
+    ),
+    linear-gradient(to bottom, #ececec 0%, #ececec 100%);
+}
+
+/* Traffic light button animations */
+.traffic-light {
+  transition: all 0.15s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.traffic-light:hover {
+  transform: scale(1.1);
+}
+
+.traffic-light:active {
+  transform: scale(0.95);
+}
+
+/* Window shake animation */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Resize cursors */
+.cursor-n-resize {
+  cursor: n-resize;
+}
+.cursor-s-resize {
+  cursor: s-resize;
+}
+.cursor-e-resize {
+  cursor: e-resize;
+}
+.cursor-w-resize {
+  cursor: w-resize;
+}
+.cursor-ne-resize {
+  cursor: ne-resize;
+}
+.cursor-nw-resize {
+  cursor: nw-resize;
+}
+.cursor-se-resize {
+  cursor: se-resize;
+}
+.cursor-sw-resize {
+  cursor: sw-resize;
+}
+
+/* Disable text selection on draggable elements */
+.select-none {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Terminal-specific styles */
+.terminal-content {
+  background-color: #000;
+  color: #00ff00;
+  font-family: var(--macos-font-mono);
+  padding: 16px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+}
+
+/* Scrollbar styling for macOS look */
+.macos-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.macos-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.macos-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.macos-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+  background-clip: content-box;
+}
+
+/* Focus styles */
+.macos-focus:focus {
+  outline: 2px solid var(--macos-selection-bg);
+  outline-offset: 2px;
+}
+
+/* Button styles */
+.macos-button {
+  font-family: var(--macos-font-ui);
+  font-size: 13px;
+  font-weight: normal;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+  color: var(--macos-text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.macos-button:hover {
+  background: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
+}
+
+.macos-button:active {
+  background: linear-gradient(to bottom, #d0d0d0, #c0c0c0);
+  transform: translateY(1px);
+}
+
+.macos-button:focus {
+  outline: 2px solid var(--macos-selection-bg);
+  outline-offset: 2px;
+}
+
+/* Input styles */
+.macos-input {
+  font-family: var(--macos-font-ui);
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background: white;
+  color: var(--macos-text-primary);
+}
+
+.macos-input:focus {
+  outline: 2px solid var(--macos-selection-bg);
+  outline-offset: 1px;
+  border-color: var(--macos-selection-bg);
+}
+
+/* Selection styles */
+::selection {
+  background: var(--macos-selection-bg);
+  color: var(--macos-selection-text);
+}
+
+::-moz-selection {
+  background: var(--macos-selection-bg);
+  color: var(--macos-selection-text);
+}
+/* C
+hat-specific styles */
+.chat-bubble {
+  max-width: 80%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.chat-bubble.own {
+  margin-left: auto;
+}
+
+.chat-bubble.other {
+  margin-right: auto;
+}
+
+.chat-bubble-urgent {
+  animation: urgentPulse 2s infinite;
+}
+
+@keyframes urgentPulse {
+  0%,
+  100% {
+    background: linear-gradient(45deg, #fee2e2, #fecaca, #fee2e2);
+  }
+  50% {
+    background: linear-gradient(45deg, #fecaca, #fee2e2, #fecaca);
+  }
+}
+
+/* Chat input styles */
+.chat-input-container {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.chat-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: var(--macos-font-ui);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: var(--macos-selection-bg);
+  box-shadow: 0 0 0 2px rgba(48, 103, 218, 0.2);
+}
+
+.chat-send-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-send-button.active {
+  background: linear-gradient(rgba(217, 249, 157, 0.9), rgba(190, 227, 120, 0.9));
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.2),
+    0 1px 1px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.3);
+}
+
+.chat-send-button.stop {
+  background: linear-gradient(rgba(254, 205, 211, 0.9), rgba(252, 165, 165, 0.9));
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.2),
+    0 1px 1px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.3);
+}
+
+.chat-send-button:hover {
+  transform: scale(1.05);
+}
+
+.chat-send-button:active {
+  transform: scale(0.95);
+}

@@ -1,0 +1,660 @@
+html {
+  background: #000;
+  height: auto;
+  min-height: 100%;
+}
+
+body {
+  background: #000;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+@font-face {
+  font-family: 'AlphaLyrae-Medium';
+  src: url('./assets/fonts/AlphaLyrae-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SchrofferMono-Regular';
+  src: url('./assets/fonts/SchrofferMono-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#root {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  position: relative;
+  background: #000;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Shimmer animation for waiting text */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Spinning animation for loading spinner */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Blinking cursor animation for typewriter effect */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Wave animation for hand emoji */
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  40% {
+    transform: rotate(14deg);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  70% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Fade in up animation for bubble */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sticker bounce animation */
+@keyframes stickerBounce {
+  0% {
+    transform: translateY(0px) scale(1) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(-4px) scale(1.05) rotate(-1deg);
+  }
+}
+
+/* Sticker idle animation */
+@keyframes stickerIdle {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.02) rotate(1deg);
+  }
+}
+
+/* Animation utility classes */
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out;
+}
+/* 3D Card with Mouse Light and Parallax Effect */
+.moving-border-card {
+  position: relative;
+  border-radius: 120px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  padding: 2rem;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  will-change: transform;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Enhanced shadow and 3D effect */
+.moving-border-card {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.moving-border-card:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Light source effect */
+.card-light {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 75%,
+    transparent 100%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+.card-light.show {
+  opacity: 1;
+}
+
+/* Inner background to create border effect */
+.moving-border-card-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(1.3);
+  -webkit-backdrop-filter: blur(25px) saturate(1.3);
+  border-radius: 120px;
+  z-index: 0;
+}
+
+/* Card content */
+.card-content-3d {
+  position: relative;
+  z-index: 5;
+}
+
+/* Global light effect container */
+.cards-container {
+  position: relative;
+  --global-mouse-x: 50%;
+  --global-mouse-y: 50%;
+}
+
+/* 移除全局光效以避免白色透明层 */
+
+/* 简化的hover效果，避免白色透明层 */
+.cards-container:hover .moving-border-card {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.2),
+    0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+/* 移除额外的边框高亮效果 */
+/* NADAR PAGE Title Animation Styles */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: translate(-50%, -50%) scale(1); 
+  }
+  50% { 
+    opacity: 0.6; 
+    transform: translate(-50%, -50%) scale(1.1); 
+  }
+}
+
+/* SK Pupok-Solid Demo Font */
+@font-face {
+  font-family: 'SK Pupok-Solid Demo';
+  src: url('./assets/fonts/SK Pupok-Solid Demo.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback for SK Pupok-Solid Demo font */
+.nadar-title-letter {
+  font-family: 'SK Pupok-Solid Demo', 'Arial Black', 'Helvetica', sans-serif;
+  font-weight: 900;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}/* 
+统一的卡片hover效果 */
+.card-hover-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.card-hover-effect:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* 图片卡片统一样式 */
+.image-card {
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.image-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 文件夹图标统一样式 */
+.folder-item {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.folder-item:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* 渐变卡片统一样式 */
+.gradient-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+.gradient-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px rgba(74, 137, 237, 0.4);
+}
+
+/* iPod组件统一样式 */
+.ipod-container {
+  transition: transform 0.3s ease;
+}
+
+.ipod-container:hover {
+  transform: scale(1.05);
+}
+
+/* 响应式布局优化 */
+@media (max-width: 1200px) {
+  .image-card {
+    width: 140px !important;
+  }
+  
+  .gradient-card {
+    width: 140px !important;
+    height: 90px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-card {
+    width: 120px !important;
+  }
+  
+  .gradient-card {
+    width: 120px !important;
+    height: 80px !important;
+  }
+  
+  .folder-item img {
+    width: 80px !important;
+  }
+}/
+* Gallery Slider Styles */
+.gallery-slider {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.gallery-slider[data-slider] {
+  /* 可以添加特定的data属性样式 */
+}
+
+.slide {
+  position: absolute;
+  width: 320px;
+  height: 450px;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide.active {
+  z-index: 20;
+}
+
+.slide:not(.active) {
+  z-index: 15;
+}
+
+.card-id {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  z-index: 10;
+  transition: color 0.6s ease;
+}
+
+.slide.active .card-id {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.slide:not(.active) .card-id {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.card-title {
+  text-align: center;
+  margin-top: auto;
+}
+
+.card-title h3 {
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  transition: all 0.6s ease;
+}
+
+.slide.active .card-title h3 {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.slide:not(.active) .card-title h3 {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  letter-spacing: 0px;
+}
+
+/* Gallery Slider Hover Effects */
+.slide:hover:not(.active) {
+  transform: translateX(var(--translate-x, 0)) scale(0.95);
+}
+
+.slide.active:hover {
+  transform: translateX(var(--translate-x, 0)) scale(1.08);
+}
+
+/* Responsive Gallery */
+@media (max-width: 1200px) {
+  .slide {
+    width: 280px;
+    height: 400px;
+  }
+  
+  .gallery-slider {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    width: 240px;
+    height: 350px;
+  }
+  
+  .gallery-slider {
+    height: 450px;
+  }
+  
+  .card-title h3 {
+    font-size: 14px !important;
+  }
+  
+  .slide.active .card-title h3 {
+    font-size: 16px !important;
+  }
+}
+/* 新的Ga
+llery Slider样式 - 横向排列支持拖拽 */
+.gallery-slider-new[data-slider] {
+  display: flex;
+  overflow: hidden;
+  width: 100vw;
+  background: #111;
+  padding: 32px 0;
+  cursor: grab;
+  user-select: none;
+  position: relative;
+}
+
+.gallery-slider-new[data-slider]:active {
+  cursor: grabbing;
+}
+
+.gallery-slider-track {
+  display: flex;
+  transition: transform 0.3s cubic-bezier(0.4, 0.8, 0.4, 1);
+  will-change: transform;
+}
+
+.slide-new {
+  flex-shrink: 0;
+  width: 320px;
+  margin: 0 24px;
+  background: #222;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px;
+  transition: transform 0.3s cubic-bezier(0.4, 0.8, 0.4, 1);
+  cursor: pointer;
+  position: relative;
+  min-height: 450px;
+}
+
+.slide-new:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.slide-new.active {
+  background: #333;
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card-id-new {
+  font-size: 1.2rem;
+  opacity: 0.5;
+  margin-bottom: 8px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #fff;
+  transition: opacity 0.3s ease;
+}
+
+.slide-new.active .card-id-new {
+  opacity: 0.8;
+}
+
+.card-title-new {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.slide-new.active .card-title-new {
+  font-size: 1.7rem;
+  color: #fff;
+}
+
+/* 动画预览区域样式 */
+.slide-new .animation-preview {
+  width: 100%;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.slide-new.active .animation-preview {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 拖拽相关样式 */
+.gallery-slider-new.dragging {
+  cursor: grabbing;
+}
+
+.gallery-slider-new.dragging .slide-new {
+  pointer-events: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .slide-new {
+    width: 280px;
+    margin: 0 20px;
+    padding: 28px 14px;
+  }
+  
+  .card-title-new {
+    font-size: 1.3rem;
+  }
+  
+  .slide-new.active .card-title-new {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide-new {
+    width: 240px;
+    margin: 0 16px;
+    padding: 24px 12px;
+    min-height: 380px;
+  }
+  
+  .card-title-new {
+    font-size: 1.1rem;
+  }
+  
+  .slide-new.active .card-title-new {
+    font-size: 1.3rem;
+  }
+  
+  .card-id-new {
+    font-size: 1rem;
+  }
+  
+  .slide-new .animation-preview {
+    height: 160px;
+  }
+}
+
+/* 滚动条隐藏 */
+.gallery-slider-new::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-slider-new {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
