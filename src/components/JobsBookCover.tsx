@@ -33,7 +33,7 @@ export const JobsBookCover: React.FC<JobsBookCoverProps> = ({ onClick, className
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = 'scale(1)';
         e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
-      }}
+      }} 
     >
       {/* 书籍封面设计 */}
       <div
