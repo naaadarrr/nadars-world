@@ -4,10 +4,12 @@ import TextAnimations from '../TextAnimations';
 import TypewriterAnimation from '../TypewriterAnimation';
 import VideoViralAgentAnimation from '../VideoViralAgentAnimation';
 import { NadarPageTitleAnimation } from '../components/animations/NadarPageTitleAnimation';
-import macintoshBg from '../assets/macintosh.png';
+import macintoshBg from '../assets/image/macintosh.png';
 // import taskProgressAnimation from '../assets/TaskProgressLoadingAnimation.json';
 // import Lottie from 'lottie-react';
 import GallerySlider from '../components/GallerySlider';
+// import SoundButton from '../components/SoundButton';
+import { useSoundManager } from '../hooks/useSfx';
 
 interface AnimationsPageProps {
   onNavigate: (page: string) => void;
@@ -15,9 +17,10 @@ interface AnimationsPageProps {
 
 export default function AnimationsPage({ onNavigate }: AnimationsPageProps) {
   // const [dotsCount, setDotsCount] = useState(0);
-  const [viewMode, setViewMode] = useState<'grid' | 'stack' | 'gallery'>('gallery');
+  const [viewMode, setViewMode] = useState<'grid' | 'gallery'>('gallery');
   const [selectedAnimation, setSelectedAnimation] = useState<number | null>(null);
   const [detailViewId, setDetailViewId] = useState<number | null>(null);
+  const soundManager = useSoundManager();
 
   // 动画组件数据
   const animationItems = [
@@ -56,7 +59,7 @@ const NadarPageTitleAnimation = () => {
       color: '#4285F4',
       image: macintoshBg,
       code: `import Lottie from 'lottie-react';
-import taskProgressAnimation from './assets/TaskProgress.json';
+import taskProgressAnimation from '../assets/TaskProgressLoadingAnimation.json';
 
 export default function TaskProgressLoadingAnimation() {
   return (
@@ -218,7 +221,10 @@ export default function VideoViralAgentAnimation({ isDetailView = false }: Props
         }}
       >
         <button
-          onClick={() => onNavigate('home')}
+          onClick={() => {
+            soundManager.playButtonClickDown(); // 返回按钮音效
+            onNavigate('home');
+          }}
           style={{
             width: '40px',
             height: '40px',
@@ -227,18 +233,12 @@ export default function VideoViralAgentAnimation({ isDetailView = false }: Props
             borderRadius: '50%',
             color: '#fff',
             fontSize: '16px',
-            cursor: 'pointer',
             transition: 'all 0.2s ease',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             outline: 'none',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'transparent';
+            cursor: 'pointer',
           }}
         >
           ←
@@ -250,7 +250,7 @@ export default function VideoViralAgentAnimation({ isDetailView = false }: Props
         style={{
           position: 'absolute',
           top: '20px',
-          right: '20px',
+          right: '200px', // 从20px改为200px，避免与SoundToggle重叠
           zIndex: 20,
           display: 'flex',
           gap: '5px',
@@ -259,10 +259,13 @@ export default function VideoViralAgentAnimation({ isDetailView = false }: Props
           padding: '4px',
         }}
       >
-        {['gallery', 'grid', 'stack'].map((mode) => (
+        {['gallery', 'grid'].map((mode) => (
           <button
             key={mode}
-            onClick={() => setViewMode(mode as 'grid' | 'stack' | 'gallery')}
+            onClick={() => {
+              soundManager.playClick();
+              setViewMode(mode as 'grid' | 'gallery');
+            }}
             style={{
               background: viewMode === mode ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
               border: 'none',
@@ -272,10 +275,10 @@ export default function VideoViralAgentAnimation({ isDetailView = false }: Props
               fontFamily: 'AlphaLyrae-Medium, sans-serif',
               fontSize: '12px',
               fontWeight: viewMode === mode ? '600' : '500',
-              cursor: 'pointer',
               transition: 'all 0.2s ease',
               backdropFilter: 'blur(10px)',
               textTransform: 'capitalize',
+              cursor: 'pointer',
             }}
           >
             {mode}
@@ -424,97 +427,14 @@ export default function VideoViralAgentAnimation({ isDetailView = false }: Props
           </div>
         )}
 
-        {/* Stack View */}
-        {viewMode === 'stack' && (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '20px',
-              padding: '40px 20px',
-              maxWidth: '800px',
-              margin: '0 auto',
-            }}
-          >
-            {animationItems.map((item, index) => (
-              <div
-                key={item.id}
-                style={{
-                  width: '100%',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '16px',
-                  padding: '30px',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '30px',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  transform: `translateY(${index * 4}px)`,
-                  zIndex: animationItems.length - index,
-                }}
-                onClick={() => setSelectedAnimation(selectedAnimation === item.id ? null : item.id)}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = `translateY(${index * 4 - 8}px) scale(1.02)`;
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = `translateY(${index * 4}px) scale(1)`;
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                }}
-              >
-                <div
-                  style={{
-                    minWidth: '180px',
-                    height: '120px',
-                    background: 'rgba(0, 0, 0, 0.3)',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {selectedAnimation === item.id ? (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'scale(0.7)' }}>
-                      {item.component}
-                    </div>
-                  ) : (
-                    <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)' }}>
-                      Preview
-                    </div>
-                  )}
-                </div>
-                
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ margin: '0 0 8px 0', fontSize: '20px', fontFamily: 'AlphaLyrae-Medium, sans-serif' }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ margin: 0, opacity: 0.7, fontSize: '14px', lineHeight: 1.4 }}>
-                    {item.description}
-                  </p>
-                </div>
-                
-                <div
-                  style={{
-                    width: '8px',
-                    height: '40px',
-                    borderRadius: '4px',
-                    background: item.color,
-                    boxShadow: `0 2px 8px ${item.color}40`,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+
 
         {/* Gallery View */}
         {viewMode === 'gallery' && (
-          <div style={{ padding: '40px 0' }}>
+          <div style={{ 
+            padding: '20px 0',
+            marginTop: '20px' // 增加与标题的间距
+          }}>
             <GallerySlider 
               items={galleryItems} 
             />

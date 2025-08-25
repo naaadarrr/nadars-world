@@ -23,14 +23,11 @@ const AnimationCard: React.FC<AnimationCardProps> = ({ card, onCardClick }) => {
       onMouseMove={(e) => {
         e.stopPropagation();
         if (cardRef.current) {
-          console.log('Mouse move detected'); // 调试信息
           setIsShowLight(true);
 
           const rect = cardRef.current.getBoundingClientRect();
           const offsetX = e.clientX - rect.left;
           const offsetY = e.clientY - rect.top;
-
-          console.log('Mouse position:', offsetX, offsetY); // 调试信息
 
           // 设置光源位置
           setLightPos({
@@ -47,13 +44,10 @@ const AnimationCard: React.FC<AnimationCardProps> = ({ card, onCardClick }) => {
           const rotateX = ((offsetY - rangeY) / rangeY) * maxXRotation;
           const rotateY = -1 * ((offsetX - rangeX) / rangeX) * maxYRotation;
 
-          console.log('Rotation:', rotateX, rotateY); // 调试信息
-
           cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
         }
       }}
       onMouseLeave={() => {
-        console.log('Mouse leave detected'); // 调试信息
         setIsShowLight(false);
         if (cardRef.current) {
           cardRef.current.style.transform =
@@ -61,7 +55,7 @@ const AnimationCard: React.FC<AnimationCardProps> = ({ card, onCardClick }) => {
         }
       }}
       onMouseEnter={() => {
-        console.log('Mouse enter detected'); // 调试信息
+        // 鼠标进入时的初始化
       }}
     >
       {/* Inner background */}
@@ -86,6 +80,10 @@ const AnimationCard: React.FC<AnimationCardProps> = ({ card, onCardClick }) => {
             background: 'rgba(255, 255, 255, 0.1)',
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(255, 255, 255, 0.15)',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            MozUserSelect: 'none',
+            msUserSelect: 'none',
           }}
         >
           {card.component}
@@ -101,6 +99,10 @@ const AnimationCard: React.FC<AnimationCardProps> = ({ card, onCardClick }) => {
               margin: '0',
               fontWeight: '500',
               textAlign: 'center',
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              MozUserSelect: 'none',
+              msUserSelect: 'none',
             }}
           >
             {card.title}

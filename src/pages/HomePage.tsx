@@ -1,7 +1,8 @@
 
 import { ChatBubble } from '../../macosx-components';
 import type { ChatMessage } from '../../macosx-components';
-import folderIcon from '../assets/folder.png';
+import folderIcon from '../assets/image/folder.png';
+import { useSoundManager } from '../hooks/useSfx';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -9,6 +10,8 @@ interface HomePageProps {
 }
 
 export default function HomePage({ onNavigate, mousePosition }: HomePageProps) {
+  const soundManager = useSoundManager();
+  
   const welcomeMessage: ChatMessage = {
     id: 'welcome-1',
     content: "👋 Hi, I'm nadar, Welcome to my creative space!",
@@ -21,19 +24,28 @@ export default function HomePage({ onNavigate, mousePosition }: HomePageProps) {
       id: 'animations',
       title: 'Animations',
       description: 'Interactive animations & motion design',
-      onClick: () => onNavigate('animations'),
+      onClick: () => {
+        soundManager.playMenuOpen(); // 文件夹点击音效
+        onNavigate('animations');
+      },
     },
     {
       id: 'projects',
       title: 'Projects',
       description: 'Design projects & case studies',
-      onClick: () => onNavigate('projects'),
+      onClick: () => {
+        soundManager.playMenuOpen(); // 文件夹点击音效
+        onNavigate('projects');
+      },
     },
     {
       id: 'video',
       title: 'Video',
       description: 'Video content & motion graphics',
-      onClick: () => onNavigate('video'),
+      onClick: () => {
+        soundManager.playMenuOpen(); // 文件夹点击音效
+        onNavigate('video');
+      },
     },
   ];
 
@@ -84,6 +96,10 @@ export default function HomePage({ onNavigate, mousePosition }: HomePageProps) {
         }}
       >
         <h1
+          onClick={() => {
+            console.log('Title clicked, playing Thump sound...'); // 调试信息
+            soundManager.playThump(); // 标题点击音效
+          }}
           style={{
             fontFamily: 'AlphaLyrae-Medium, sans-serif',
             textAlign: 'center',
@@ -97,6 +113,14 @@ export default function HomePage({ onNavigate, mousePosition }: HomePageProps) {
             position: 'relative',
             fontWeight: '500',
             letterSpacing: '-0.02em',
+            cursor: 'pointer',
+            transition: 'transform 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.02)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
           }}
         >
           Nadar Design
@@ -127,12 +151,16 @@ export default function HomePage({ onNavigate, mousePosition }: HomePageProps) {
             border: '2px solid rgba(255, 255, 255, 0.1)',
             display: 'block',
             maxWidth: '100%',
+            cursor: 'pointer',
           }}
           onError={(e) => {
             console.error('Failed to load Steve Jobs image:', e);
           }}
           onLoad={() => {
             console.log('Steve Jobs image loaded successfully');
+          }}
+          onMouseEnter={() => {
+            soundManager.playWindowFocus(); // 图片hover音效
           }}
         />
       </div>
@@ -197,6 +225,7 @@ export default function HomePage({ onNavigate, mousePosition }: HomePageProps) {
               onClick={item.onClick}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.05)';
+                soundManager.playWindowFocus(); // 图片hover音效
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
@@ -208,7 +237,7 @@ export default function HomePage({ onNavigate, mousePosition }: HomePageProps) {
                 style={{
                   width: '150px',
                   height: 'auto',
-                  filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4)) brightness(1.2)', // 增加亮度到1.2
+                  filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4)) brightness(1.2)',
                   opacity: 1,
                 }}
               />

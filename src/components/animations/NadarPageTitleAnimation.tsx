@@ -17,8 +17,8 @@ const AnimatedLetter: React.FC<LetterProps & { finalRotation?: number; finalScal
   const [position, setPosition] = useState(() => {
     // 从随机位置开始动画，确保在可见区域内
     return {
-      x: Math.random() * 240 + 30, // 限制在卡片范围内 (270px width)
-      y: Math.random() * 120 + 30, // 限制在卡片范围内 (150px height)
+      x: Math.random() * 280 + 20, // 限制在卡片范围内 (320px width)
+      y: Math.random() * 160 + 20, // 限制在卡片范围内 (200px height)
       rotation: (Math.random() - 0.5) * 180,
       scale: 0.4 + Math.random() * 0.3, // 稍微增大初始尺寸
     };
@@ -26,8 +26,8 @@ const AnimatedLetter: React.FC<LetterProps & { finalRotation?: number; finalScal
 
   const [scatterPosition] = useState(() => {
     // 气球效果的分散位置
-    const horizontalRange = 30;
-    const verticalRange = 25;
+    const horizontalRange = 25; // 减少水平分散范围
+    const verticalRange = 20;   // 减少垂直分散范围
     const rotationRange = 15;
     
     return {
@@ -89,7 +89,7 @@ const AnimatedLetter: React.FC<LetterProps & { finalRotation?: number; finalScal
             ? `all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.1)`
             : `all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)`
           : 'none',
-        fontSize: '32px', // 适合卡片大小
+        fontSize: '28px', // 稍微减小字体大小，确保在卡片中完全显示
         fontFamily: '"SK Pupok-Solid Demo", "Arial Black", sans-serif',
         fontWeight: '900',
         color: '#ffffff',
@@ -137,23 +137,26 @@ export const NadarPageTitleAnimation: React.FC = () => {
 
   const letters = ['N', 'A', 'D', 'A', 'R', ' ', 'P', 'A', 'G', 'E'];
   
-  // 适合卡片的字母布局
+  // 适合卡片的字母布局 - 动态计算中心位置
   const calculateFinalPositions = () => {
-    const centerX = 135; // 卡片中心 (270px / 2)
-    const centerY = 75;  // 卡片中心 (150px / 2)
+    // 获取卡片容器的实际尺寸
+    const containerWidth = 320; // 默认卡片宽度
+    const containerHeight = 200; // 动画内容区域高度
+    const centerX = containerWidth / 2;
+    const centerY = containerHeight / 2;
     
     const letterSettings = [
-      // NADAR - 上层
-      { x: -40, y: -20, rotation: -3, scale: 0.8 },   // N
-      { x: -20, y: -15, rotation: 5, scale: 0.7 },    // A
-      { x: 0, y: -22, rotation: -2, scale: 0.9 },      // D
-      { x: 20, y: -18, rotation: 7, scale: 0.65 },     // A
-      { x: 40, y: -20, rotation: -4, scale: 0.85 },   // R
-      // PAGE - 下层
-      { x: -35, y: 15, rotation: 4, scale: 0.8 },      // P
-      { x: -15, y: 10, rotation: -3, scale: 0.6 },    // A
-      { x: 5, y: 12, rotation: 8, scale: 0.85 },     // G
-      { x: 25, y: 15, rotation: 6, scale: 0.7 },     // E
+      // NADAR - 上层，更紧凑的布局
+      { x: -35, y: -15, rotation: -3, scale: 0.8 },   // N
+      { x: -18, y: -12, rotation: 5, scale: 0.7 },    // A
+      { x: 0, y: -18, rotation: -2, scale: 0.9 },      // D
+      { x: 18, y: -15, rotation: 7, scale: 0.65 },     // A
+      { x: 35, y: -18, rotation: -4, scale: 0.85 },   // R
+      // PAGE - 下层，更紧凑的布局
+      { x: -30, y: 12, rotation: 4, scale: 0.8 },      // P
+      { x: -12, y: 8, rotation: -3, scale: 0.6 },    // A
+      { x: 6, y: 10, rotation: 8, scale: 0.85 },     // G
+      { x: 24, y: 12, rotation: 6, scale: 0.7 },     // E
     ];
     
     let settingIndex = 0;
@@ -234,6 +237,9 @@ export const NadarPageTitleAnimation: React.FC = () => {
         pointerEvents: 'auto', // 允许点击事件
         overflow: 'hidden',
         cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
       onClick={handleTitleClick} // 点击触发动画
     >

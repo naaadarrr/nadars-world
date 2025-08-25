@@ -1,8 +1,11 @@
+import { useSoundManager } from '../hooks/useSfx';
+
 interface AboutPageProps {
   onNavigate: (page: string) => void;
 }
 
 export default function AboutPage({ onNavigate }: AboutPageProps) {
+  const soundManager = useSoundManager();
   return (
     <>
       {/* 返回按钮 */}
@@ -16,7 +19,10 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
         }}
       >
         <button
-          onClick={() => onNavigate('home')}
+          onClick={() => {
+            soundManager.playButtonClickDown(); // 返回按钮音效
+            onNavigate('home');
+          }}
           style={{
             background: 'rgba(255, 255, 255, 0.1)',
             border: '1px solid rgba(255, 255, 255, 0.2)',

@@ -66,33 +66,30 @@ const VideoViralAgentAnimation: React.FC<VideoViralAgentAnimationProps> = ({ isD
             display: 'inline-block',
           }}
         >
-          {/* 基础文字 - 始终白色 */}
-          <div
-            ref={textRef}
-            style={{
-              fontSize: isDetailView ? '120px' : '20px',
-              fontWeight: '600',
-              fontFamily: 'system-ui, -apple-system, sans-serif',
-              color: '#fff',
-              textAlign: 'center',
-              lineHeight: 1.1,
-              position: 'relative',
-              zIndex: 1,
-            }}
-          >
-            Video Viral Agent
-          </div>
+          {/* 基础文字 - 只在非动画时显示 */}
+          {!isAnimating && (
+            <div
+              ref={textRef}
+              style={{
+                fontSize: isDetailView ? '120px' : '20px',
+                fontWeight: '600',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                color: '#fff',
+                textAlign: 'center',
+                lineHeight: 1.1,
+                position: 'relative',
+                zIndex: 1,
+              }}
+            >
+              Video Viral Agent
+            </div>
+          )}
           
           {/* 光效层 - 只在动画时显示 */}
           {isAnimating && (
             <div
               key={animationKey}
               style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
                 fontSize: isDetailView ? '120px' : '20px',
                 fontWeight: '600',
                 fontFamily: 'system-ui, -apple-system, sans-serif',

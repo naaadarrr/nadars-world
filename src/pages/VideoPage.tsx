@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useSoundManager } from '../hooks/useSfx';
 
 interface VideoPageProps {
   onNavigate: (page: string) => void;
@@ -7,6 +8,7 @@ interface VideoPageProps {
 export default function VideoPage({ onNavigate }: VideoPageProps) {
   const [showVideo, setShowVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const soundManager = useSoundManager();
 
   const handlePlayClick = () => {
     setShowVideo(true);
@@ -31,7 +33,10 @@ export default function VideoPage({ onNavigate }: VideoPageProps) {
         }}
       >
         <button
-          onClick={() => onNavigate('home')}
+          onClick={() => {
+            soundManager.playButtonClickDown(); // 返回按钮音效
+            onNavigate('home');
+          }}
           style={{
             width: '40px',
             height: '40px',

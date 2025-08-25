@@ -1,8 +1,13 @@
+
+// import SoundButton from "../components/SoundButton";
+import { useSoundManager } from "../hooks/useSfx";
+
 interface ProjectsPageProps {
   onNavigate: (page: string) => void;
 }
 
 export default function ProjectsPage({ onNavigate }: ProjectsPageProps) {
+  const soundManager = useSoundManager();
   const projects = [
     {
       id: 1,
@@ -25,6 +30,13 @@ export default function ProjectsPage({ onNavigate }: ProjectsPageProps) {
       tech: ['Figma', 'React', 'Storybook'],
       status: 'Planning',
     },
+    {
+      id: 4,
+      title: 'Mouse Follower Effect',
+      description: 'Global mouse follower with image switching animation (now available site-wide)',
+      tech: ['React', 'TypeScript', 'Canvas API'],
+      status: 'Completed',
+    },
   ];
 
   return (
@@ -40,7 +52,10 @@ export default function ProjectsPage({ onNavigate }: ProjectsPageProps) {
         }}
       >
         <button
-          onClick={() => onNavigate('home')}
+          onClick={() => {
+            soundManager.playButtonClickDown(); // 返回按钮音效
+            onNavigate('home');
+          }}
           style={{
             background: 'rgba(255, 255, 255, 0.1)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -128,6 +143,14 @@ export default function ProjectsPage({ onNavigate }: ProjectsPageProps) {
               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
               e.currentTarget.style.transform = 'translateY(0)';
             }}
+            onClick={() => {
+              if (project.title === 'Mouse Follower Effect') {
+                soundManager.playSuccess();
+                onNavigate('mouse-follower');
+              } else {
+                soundManager.playClick();
+              }
+            }}
           >
             <div
               style={{
@@ -211,6 +234,11 @@ export default function ProjectsPage({ onNavigate }: ProjectsPageProps) {
           </div>
         ))}
       </div>
+
+
+
+
+
     </>
   );
 }
